@@ -26,6 +26,24 @@
 
     // Run the function when the page has fully loaded
     window.addEventListener('load', removeHotSearchComponent);
+
+        // Create a MutationObserver to watch for changes in the DOM
+    const observer = new MutationObserver((mutationsList, observer) => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                // Check if the "Today's Hot Search" component was added
+                const hotSearchElement = document.querySelector('.newsWrapper--dBjtsBS2');
+                const Element = document.querySelector('.cardHeader--agdHGMm_');
+                if (hotSearchElement) {
+                    hotSearchElement.remove();
+                    Element.remove();
+                }
+            }
+        }
+    });
+
+    // Start observing the body for child additions/removals
+    observer.observe(document.body, { childList: true, subtree: true });
 })();
 
 
